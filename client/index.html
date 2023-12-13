@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VetsPlace - Your Veterinary Partner</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="js/main.js" defer></script>
+</head>
+<body>
+    <header>
+        <h1>Welcome to VetsPlace</h1>
+        <nav>
+            <ul>
+                <li><a href="appointments.html">Appointments</a></li>
+                <li><a href="medical-records.html">Medical Records</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section id="search-clients">
+            <h2>Search Clients</h2>
+            <input type="text" id="search-query" placeholder="Search clients...">
+            <button onclick="searchClients()">Search</button>
+        </section>
+
+        <section id="manage-clients">
+            <h2>Manage Clients</h2>
+            <button onclick="openClientForm()">Add New Client</button>
+        </section>
+
+        <div id="add-client-modal" class="modal">
+            <div class="modal-content">
+                <span class="close-button" onclick="closeModal('add-client-modal')">&times;</span>
+                <h2>Add New Client</h2>
+                <form id="add-client-form">
+                    <input type="text" id="client-id" placeholder="Client ID" readonly>
+                    <input type="text" id="client-name" placeholder="Client's Name" required>
+                    <input type="text" id="phone-number" placeholder="Phone Number" required>
+                    <input type="text" id="address" placeholder="Address" required>
+                    <input type="text" id="pets-name" placeholder="Pet's Name" required>
+                    <button type="submit">Add Client</button>
+                </form>
+            </div>
+        </div>
+
+        <div id="search-results-modal" class="modal">
+            <div class="modal-content">
+                <span class="close-button" onclick="closeModal('search-results-modal')">&times;</span>
+                <h2>Search Results</h2>
+                <div id="search-results"></div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2023 VetsPlace. All rights reserved.</p>
+    </footer>
+</body>
+</html>
