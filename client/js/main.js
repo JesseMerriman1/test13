@@ -1,4 +1,5 @@
 document.addEventListener('DOMContentLoaded', function() {
+    // Client management event listeners
     const addClientForm = document.getElementById('add-client-form');
     if (addClientForm) {
         addClientForm.addEventListener('submit', function(e) {
@@ -20,12 +21,23 @@ document.addEventListener('DOMContentLoaded', function() {
         addClientButton.addEventListener('click', openClientForm);
     }
 
+    // Medical record page event listeners
+    const medicalRecordsForm = document.getElementById('medical-records-form');
+    if (medicalRecordsForm) {
+        medicalRecordsForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            submitMedicalRecord();
+        });
+    }
+
+    // Close modal functionality
     const closeButtons = document.querySelectorAll('.close-modal');
     closeButtons.forEach(button => {
         button.addEventListener('click', closeModal);
     });
 });
 
+// Client management functions
 function addClient() {
     const clientData = {
         name: document.getElementById('client-name').value,
@@ -84,6 +96,29 @@ function deleteClient(clientId) {
     .catch(handleError);
 }
 
+// Medical record management functions
+function submitMedicalRecord() {
+    const recordData = {
+        patient_id: document.getElementById('patient-id').value,
+        date_of_visit: document.getElementById('date-of-visit').value,
+        notes: document.getElementById('notes').value,
+        treatment_plan: document.getElementById('treatment-plan').value
+    };
+
+    fetch('/api/patient-records', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(recordData)
+    })
+    .then(handleResponse)
+    .then(data => {
+        alert('Medical record submitted successfully!');
+        // Additional actions after successful submission
+    })
+    .catch(handleError);
+}
+
+// Modal control functions
 function closeModal(modalId = '') {
     const modal = modalId ? document.getElementById(modalId) : document.querySelector('.modal.show');
     if (modal) {
@@ -98,6 +133,7 @@ function openClientForm() {
     }
 }
 
+// Response handling
 function handleResponse(response) {
     if (!response.ok) {
         throw new Error('Network response was not ok: ' + response.statusText);

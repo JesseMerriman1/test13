@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medical Records - VetsPlace</title>
+    <link rel="stylesheet" href="css/style.css"> <!-- Update path as necessary -->
+    <script src="js/main.js" defer></script>
+</head>
+<body>
+    <header>
+        <h1>Medical Records</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="appointments.html">Appointments</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section id="search-patients">
+            <h2>Search Patients</h2>
+            <input type="text" id="patient-search-query" placeholder="Search patients...">
+            <button onclick="searchPatients()">Search</button>
+        </section>
+
+        <section id="patient-medical-records">
+            <h2>Add/Edit Medical Records</h2>
+            <form id="medical-records-form">
+                <input type="number" id="patient-id" placeholder="Patient ID" required>
+                <input type="date" id="date-of-visit" required>
+                <textarea id="notes" placeholder="Notes"></textarea>
+                <textarea id="treatment-plan" placeholder="Treatment Plan"></textarea>
+                <button type="submit">Submit</button>
+            </form>
+        </section>
+
+        <div id="search-results-modal" class="modal">
+            <div class="modal-content">
+                <span class="close-button" onclick="closeSearchModal()">&times;</span>
+                <h2>Search Results</h2>
+                <div id="search-results"></div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2023 VetsPlace. All rights reserved.</p>
+    </footer>
+
+    <script>
+        document.getElementById('medical-records-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            submitMedicalRecord();
+        });
+
+        function searchPatients() {
+            const query = document.getElementById('patient-search-query').value;
+            fetch(`/api/patients/search?term=${encodeURIComponent(query)}`)
+                .then(handleResponse)
+                .then(data => {
+                    const resultsContainer = document.getElementById('search-results');
+                    resultsContainer.innerHTML = data.map(patient => 
+                        `<div>${patient.name} - <a href="/patient/${patient.id}/records">View Records</a></div>`
+                    ).join('');
+                    document.getElementById('search-results-modal').style.display = 'block';
+                })
+                .catch(handleError);
+        }
+
+        function submitMedicalRecord() {
+            const recordData = {
+                patient_id: document.getElementById('patient-id').value,
+                date_of_visit: document.getElementById('date-of-visit').value,
+                notes: document.getElementById('notes').value,
+                treatment_plan: document.getElementById('treatment-plan').value
+            };
+
+            fetch('/api/patient-records', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(recordData)
+            })
+            .then(handleResponse)
+            .then(data => {
+                alert('Medical record submitted successfully!');
+                // Clear form or additional logic as required
+            })
+            .catch(handleError);
+        }
+
+        function closeSearchModal() {
+            document.getElementById('search-results-modal').style.display = 'none';
+        }
+
+        // Reuse existing functions from main.js for handleResponse, handleError, etc.
+    </script>
+</body>
+</html>
