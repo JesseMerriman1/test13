@@ -3,7 +3,7 @@ const pool = require('../db');
 const Clients = {
   async getAllClients() {
     try {
-      const allClients = await pool.query('SELECT client_id, name, phone_number, address FROM clients');
+      const allClients = await pool.query('SELECT client_id, name, phone_number AS "phoneNumber", address FROM clients');
       return allClients.rows;
     } catch (err) {
       console.error('Error in getAllClients:', err);
@@ -16,7 +16,7 @@ const Clients = {
       if (isNaN(parseInt(id, 10))) {
         throw new Error('Invalid client ID');
       }
-      const client = await pool.query('SELECT client_id, name, phone_number, address FROM clients WHERE client_id = $1', [id]);
+      const client = await pool.query('SELECT client_id, name, phone_number AS "phoneNumber", address FROM clients WHERE client_id = $1', [id]);
       return client.rows[0];
     } catch (err) {
       console.error('Error in getClientById:', err);
@@ -26,10 +26,10 @@ const Clients = {
 
   async createClient(clientData) {
     try {
-      const { name, phone_number, address } = clientData;
+      const { name, phoneNumber, address } = clientData;
       const newClient = await pool.query(
-        'INSERT INTO clients (name, phone_number, address) VALUES ($1, $2, $3) RETURNING *',
-        [name, phone_number, address]
+        'INSERT INTO clients (name, phone_number, address) VALUES ($1, $2, $3) RETURNING client_id, name, phone_number AS "phoneNumber", address',
+        [name, phoneNumber, address]
       );
       return newClient.rows[0];
     } catch (err) {
@@ -43,10 +43,10 @@ const Clients = {
       if (isNaN(parseInt(id, 10))) {
         throw new Error('Invalid client ID');
       }
-      const { name, phone_number, address } = clientData;
+      const { name, phoneNumber, address } = clientData;
       const updatedClient = await pool.query(
-        'UPDATE clients SET name = $1, phone_number = $2, address = $3 WHERE client_id = $4 RETURNING *',
-        [name, phone_number, address, id]
+        'UPDATE clients SET name = $1, phone_number = $2, address = $3 WHERE client_id = $4 RETURNING client_id, name, phone_number AS "phoneNumber", address',
+        [name, phoneNumber, address, id]
       );
       return updatedClient.rows[0];
     } catch (err) {
@@ -60,7 +60,7 @@ const Clients = {
       if (isNaN(parseInt(id, 10))) {
         throw new Error('Invalid client ID');
       }
-      const deletedClient = await pool.query('DELETE FROM clients WHERE client_id = $1 RETURNING *', [id]);
+      const deletedClient = await pool.query('DELETE FROM clients WHERE client_id = $1 RETURNING client_id', [id]);
       return deletedClient.rows[0];
     } catch (err) {
       console.error('Error in deleteClient:', err);
@@ -71,7 +71,7 @@ const Clients = {
   async searchClients(searchTerm) {
     try {
       const result = await pool.query(
-        'SELECT client_id, name, phone_number, address FROM clients WHERE name ILIKE $1 OR phone_number ILIKE $1 OR address ILIKE $1',
+        'SELECT client_id, name, phone_number AS "phoneNumber", address FROM clients WHERE name ILIKE $1 OR phone_number ILIKE $1 OR address ILIKE $1',
         [`%${searchTerm}%`]
       );
       return result.rows;

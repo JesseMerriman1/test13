@@ -1,7 +1,7 @@
 const Clients = require('../models/clients');
 
 const clientsController = {
-    // pull all clients
+    // Fetch all clients
     getAllClients: async (req, res) => {
         try {
             const allClients = await Clients.getAllClients();
@@ -12,7 +12,7 @@ const clientsController = {
         }
     },
 
-    // Find a client by their ID
+    // Retrieve a client by their ID
     getClientById: async (req, res) => {
         try {
             const { id } = req.params;
@@ -32,8 +32,8 @@ const clientsController = {
     // Create a new client
     createClient: async (req, res) => {
         try {
-            const { name, contact_info } = req.body;
-            const newClient = await Clients.createClient({ name, contact_info });
+            const { name, phoneNumber, address } = req.body;
+            const newClient = await Clients.createClient({ name, phoneNumber, address });
 
             res.status(201).json(newClient);
         } catch (err) {
@@ -42,13 +42,13 @@ const clientsController = {
         }
     },
 
-    // MAke changes to a client
+    // Update a client's details
     updateClient: async (req, res) => {
         try {
             const { id } = req.params;
-            const { name, contact_info } = req.body;
+            const { name, phoneNumber, address } = req.body;
 
-            const updatedClient = await Clients.updateClient(id, { name, contact_info });
+            const updatedClient = await Clients.updateClient(id, { name, phoneNumber, address });
 
             if (updatedClient) {
                 res.json(updatedClient);
@@ -68,7 +68,7 @@ const clientsController = {
             const deletedClient = await Clients.deleteClient(id);
 
             if (deletedClient) {
-                res.json(deletedClient);
+                res.json({ message: "Client successfully deleted" });
             } else {
                 res.status(404).send("Client not found");
             }
@@ -77,7 +77,8 @@ const clientsController = {
             res.status(500).send("Server error");
         }
     },
-    //search for a client by name
+
+    // Search for clients by name, phone number, or address
     searchClients: async (req, res) => {
         try {
             const searchTerm = req.query.term;
@@ -88,7 +89,6 @@ const clientsController = {
             res.status(500).send("Server error: " + err.message);
         }
     }
-
 };
 
 module.exports = clientsController;
