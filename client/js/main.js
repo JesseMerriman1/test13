@@ -21,15 +21,6 @@ document.addEventListener('DOMContentLoaded', function() {
         addClientButton.addEventListener('click', openClientForm);
     }
 
-    // Medical record page event listeners
-    const medicalRecordsForm = document.getElementById('medical-records-form');
-    if (medicalRecordsForm) {
-        medicalRecordsForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            submitMedicalRecord();
-        });
-    }
-
     // Close modal functionality
     const closeButtons = document.querySelectorAll('.close-modal');
     closeButtons.forEach(button => {
@@ -71,7 +62,7 @@ function searchClients() {
                 data.map(client => `
                     <div>
                         ${client.name} - ${client.phoneNumber || 'N/A'}, ${client.address || 'N/A'}
-                        <button onclick="deleteClient('${client.id}')">Delete</button>
+                        <button onclick="deleteClient('${client.phoneNumber}')">Delete</button>
                     </div>
                 `).join('');
             document.getElementById('search-results-modal').style.display = 'block';
@@ -79,41 +70,19 @@ function searchClients() {
         .catch(handleError);
 }
 
-function deleteClient(clientId) {
-    console.log("Attempting to delete client with ID:", clientId);
-    if (!clientId) {
-        console.error('Client ID is undefined');
-        alert('Error: Client ID is undefined. Cannot delete client.');
+function deleteClient(phoneNumber) {
+    console.log("Attempting to delete client with phone number:", phoneNumber);
+    if (!phoneNumber) {
+        console.error('Phone number is undefined');
+        alert('Error: Phone number is undefined. Cannot delete client.');
         return;
     }
 
-    fetch(`/api/clients/${clientId}`, { method: 'DELETE' })
+    fetch(`/api/clients/deleteByPhone/${phoneNumber}`, { method: 'DELETE' })
     .then(handleResponse)
     .then(() => {
         alert('Client deleted successfully!');
         searchClients();
-    })
-    .catch(handleError);
-}
-
-// Medical record management functions
-function submitMedicalRecord() {
-    const recordData = {
-        patient_id: document.getElementById('patient-id').value,
-        date_of_visit: document.getElementById('date-of-visit').value,
-        notes: document.getElementById('notes').value,
-        treatment_plan: document.getElementById('treatment-plan').value
-    };
-
-    fetch('/api/patient-records', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(recordData)
-    })
-    .then(handleResponse)
-    .then(data => {
-        alert('Medical record submitted successfully!');
-        // Additional actions after successful submission
     })
     .catch(handleError);
 }
