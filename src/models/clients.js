@@ -55,12 +55,12 @@ const Clients = {
         }
     },
 
-    async deleteClient(phoneNumber) {
+    async deleteClientByPhone(phone_number) {
         try {
-            const deletedClient = await pool.query('DELETE FROM clients WHERE phone_number = $1 RETURNING *', [phoneNumber]);
+            const deletedClient = await pool.query('DELETE FROM clients WHERE phone_number = $1 RETURNING *', [phone_number]);
             return deletedClient.rows[0];
         } catch (err) {
-            console.error('Error in deleteClient:', err);
+            console.error('Error in deleteClientByPhone:', err);
             throw err;
         }
     },

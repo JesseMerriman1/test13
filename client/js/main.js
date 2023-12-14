@@ -1,35 +1,28 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // Client management event listeners
+    // Add event listeners here
     const addClientForm = document.getElementById('add-client-form');
-    if (addClientForm) {
-        addClientForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            addClient();
-        });
-    }
+    addClientForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        addClient();
+    });
 
     const searchForm = document.getElementById('search-form');
-    if (searchForm) {
-        searchForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            searchClients();
-        });
-    }
+    searchForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        searchClients();
+    });
 
     const addClientButton = document.getElementById('add-client-button');
-    if (addClientButton) {
-        addClientButton.addEventListener('click', openClientForm);
-    }
+    addClientButton.addEventListener('click', openClientForm);
 
-    // Close modal functionality
     const closeButtons = document.querySelectorAll('.close-modal');
     closeButtons.forEach(button => {
         button.addEventListener('click', closeModal);
     });
 });
 
-// Client management functions
 function addClient() {
+    // Add client logic
     const clientData = {
         name: document.getElementById('client-name').value,
         phoneNumber: document.getElementById('phone-number').value,
@@ -44,7 +37,6 @@ function addClient() {
     })
     .then(handleResponse)
     .then(data => {
-        console.log('Client added:', data);
         alert('Client added successfully!');
         closeModal('add-client-modal');
         searchClients();
@@ -53,32 +45,17 @@ function addClient() {
 }
 
 function searchClients() {
+    // Search clients logic
     const query = document.getElementById('search-query').value;
     fetch(`/api/clients/search?term=${encodeURIComponent(query)}`)
         .then(handleResponse)
-        .then(data => {
-            const resultsContainer = document.getElementById('search-results');
-            resultsContainer.innerHTML = data.length === 0 ? '<p>No clients found.</p>' : 
-                data.map(client => `
-                    <div>
-                        ${client.name} - ${client.phoneNumber || 'N/A'}, ${client.address || 'N/A'}
-                        <button onclick="deleteClient('${client.phoneNumber}')">Delete</button>
-                    </div>
-                `).join('');
-            document.getElementById('search-results-modal').style.display = 'block';
-        })
+        .then(data => displaySearchResults(data))
         .catch(handleError);
 }
 
 function deleteClient(phoneNumber) {
-    console.log("Attempting to delete client with phone number:", phoneNumber);
-    if (!phoneNumber) {
-        console.error('Phone number is undefined');
-        alert('Error: Phone number is undefined. Cannot delete client.');
-        return;
-    }
-
-    fetch(`/api/clients/deleteByPhone/${phoneNumber}`, { method: 'DELETE' })
+    // Delete client by phone number
+    fetch(`/api/clients/phone/${phoneNumber}`, { method: 'DELETE' })
     .then(handleResponse)
     .then(() => {
         alert('Client deleted successfully!');
@@ -87,30 +64,34 @@ function deleteClient(phoneNumber) {
     .catch(handleError);
 }
 
-// Modal control functions
-function closeModal(modalId = '') {
-    const modal = modalId ? document.getElementById(modalId) : document.querySelector('.modal.show');
-    if (modal) {
-        modal.style.display = 'none';
-    }
+function displaySearchResults(data) {
+    const resultsContainer = document.getElementById('search-results');
+    resultsContainer.innerHTML = data.map(client => `
+        <div>
+            ${client.name} - ${client.phoneNumber}, ${client.address}
+            <button onclick="deleteClient('${client.phoneNumber}')">Delete</button>
+        </div>
+    `).join('');
+}
+
+function closeModal(modalId) {
+    const modal = document.getElementById(modalId);
+    modal.style.display = 'none';
 }
 
 function openClientForm() {
     const addClientModal = document.getElementById('add-client-modal');
-    if (addClientModal) {
-        addClientModal.style.display = 'block';
-    }
+    addClientModal.style.display = 'block';
 }
 
-// Response handling
 function handleResponse(response) {
     if (!response.ok) {
-        throw new Error('Network response was not ok: ' + response.statusText);
+        throw new Error('Network response was not ok');
     }
     return response.json();
 }
 
 function handleError(error) {
-    console.error('Fetch error:', error);
-    alert('An error occurred. Check the console for more details.');
+    console.error('Error:', error);
+    alert('An error occurred. Please try again.');
 }

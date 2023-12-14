@@ -64,8 +64,8 @@ const clientsController = {
     // Delete a client by phone number
     deleteClientByPhone: async (req, res) => {
         try {
-            const { phoneNumber } = req.params;
-            const deletedClient = await Clients.deleteClientByPhone(phoneNumber);
+            const { phone_number } = req.params;
+            const deletedClient = await Clients.deleteClientByPhone(phone_number);
 
             if (deletedClient) {
                 res.json({ message: "Client successfully deleted" });
