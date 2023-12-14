@@ -32,8 +32,8 @@ const clientsController = {
     // Create a new client
     createClient: async (req, res) => {
         try {
-            const { name, phoneNumber, address } = req.body;
-            const newClient = await Clients.createClient({ name, phoneNumber, address });
+            const { name, phone_number, address } = req.body;
+            const newClient = await Clients.createClient({ name, phone, address });
 
             res.status(201).json(newClient);
         } catch (err) {
