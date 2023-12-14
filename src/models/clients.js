@@ -57,10 +57,7 @@ const Clients = {
 
     async deleteClient(phoneNumber) {
         try {
-            const deletedClient = await pool.query(
-                'DELETE FROM clients WHERE phone_number = $1 RETURNING *',
-                [phoneNumber]
-            );
+            const deletedClient = await pool.query('DELETE FROM clients WHERE phone_number = $1 RETURNING *', [phoneNumber]);
             return deletedClient.rows[0];
         } catch (err) {
             console.error('Error in deleteClient:', err);

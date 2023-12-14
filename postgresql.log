@@ -420,3 +420,13 @@
 2023-12-09 15:52:56.291 CST [56896] FATAL:  database "jesse" does not exist
 2023-12-09 16:02:20.796 CST [56890] LOG:  checkpoint starting: time
 2023-12-09 16:02:20.803 CST [56890] LOG:  checkpoint complete: wrote 3 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.002 s, sync=0.001 s, total=0.008 s; sync files=2, longest=0.001 s, average=0.001 s; distance=0 kB, estimate=0 kB; lsn=0/20C6A48, redo lsn=0/20C6A10
+2023-12-13 21:36:06.271 CST [65485] FATAL:  database "jesse" does not exist
+2023-12-13 21:36:08.286 CST [56889] LOG:  received fast shutdown request
+2023-12-13 21:36:08.286 CST [56889] LOG:  aborting any active transactions
+2023-12-13 21:36:08.287 CST [56897] FATAL:  terminating connection due to administrator command
+2023-12-13 21:36:08.287 CST [64177] FATAL:  terminating connection due to administrator command
+2023-12-13 21:36:08.287 CST [56889] LOG:  background worker "logical replication launcher" (PID 56895) exited with exit code 1
+2023-12-13 21:36:08.288 CST [56890] LOG:  shutting down
+2023-12-13 21:36:08.289 CST [56890] LOG:  checkpoint starting: shutdown immediate
+2023-12-13 21:36:08.292 CST [56890] LOG:  checkpoint complete: wrote 0 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.001 s, sync=0.001 s, total=0.004 s; sync files=0, longest=0.000 s, average=0.000 s; distance=0 kB, estimate=0 kB; lsn=0/20C6AF8, redo lsn=0/20C6AF8
+2023-12-13 21:36:08.293 CST [56889] LOG:  database system is shut down
