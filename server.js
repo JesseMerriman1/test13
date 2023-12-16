@@ -1,4 +1,3 @@
-require('dotenv').config();
 const express = require('express');
 const path = require('path');
 const { Pool } = require('pg');
@@ -18,14 +17,14 @@ app.use(express.static(path.join(__dirname, 'client')));
 // API routes
 const appointmentsRoutes = require('./src/routes/appointments');
 const clientsRoutes = require('./src/routes/clients');
-const patientRecordsRoutes = require('./src/routes/patient_records');
+const patientRecordsRoutes = require('./src/routes/patient_records'); // Corrected route path
 const patientsRoutes = require('./src/routes/patients');
 const userAuthRoutes = require('./src/routes/user_authentication');
 const usersRoutes = require('./src/routes/users');
 
 app.use('/api/appointments', appointmentsRoutes);
 app.use('/api/clients', clientsRoutes);
-app.use('/api/patient-records', patientRecordsRoutes);
+app.use('/api/patientrecords', patientRecordsRoutes); // Corrected route path
 app.use('/api/patients', patientsRoutes);
 app.use('/api/auth', userAuthRoutes);
 app.use('/api/users', usersRoutes);
