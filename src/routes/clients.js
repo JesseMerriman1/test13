@@ -18,6 +18,6 @@ router.post('/', clientsController.createClient);
 router.put('/:id', clientsController.updateClient);
 
 // Corrected route for deleting a client by phone number
-router.delete('/deleteByPhone/:phone_number', clientsController.deleteClient);
+router.delete('/deleteByPhone/:phone_number', clientsController.deleteClientByPhone);
 
 module.exports = router;
