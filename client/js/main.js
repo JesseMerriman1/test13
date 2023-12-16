@@ -140,7 +140,7 @@ function addRecord() {
 
 function searchRecords() {
     const query = document.getElementById('search-query').value;
-    fetch(`api/patient-records/${query}`)
+    fetch(`/api/patient-records/search?term=${encodeURIComponent(query)}`)
         .then(handleResponse)
         .then(data => {
             const resultsContainer = document.getElementById('search-results');
