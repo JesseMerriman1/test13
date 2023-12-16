@@ -22,7 +22,7 @@
         <section id="search-patients">
             <h2>Search Patients</h2>
             <input type="text" id="patient-search-query" placeholder="Search patients...">
-            <button onclick="searchPatients()">Search</button>
+            <button onclick="searchRecords()">Search</button>
         </section>
 
         <section id="patient-medical-records">
@@ -55,14 +55,14 @@
             submitMedicalRecord();
         });
 
-        function searchPatients() {
+        function searchRecords() {
             const query = document.getElementById('patient-search-query').value;
-            fetch(`/api/patients/search?term=${encodeURIComponent(query)}`)
+            fetch(`/api/patient-records/search?term=${encodeURIComponent(query)}`)
                 .then(handleResponse)
                 .then(data => {
                     const resultsContainer = document.getElementById('search-results');
-                    resultsContainer.innerHTML = data.map(patient => 
-                        `<div>${patient.name} - <a href="/patient/${patient.id}/records">View Records</a></div>`
+                    resultsContainer.innerHTML = data.map(record => 
+                        `<div>Record ID: ${record.record_id}, Date: ${record.date_of_visit}, Notes: ${record.notes || 'N/A'}, Treatment Plan: ${record.treatment_plan || 'N/A'}</div>`
                     ).join('');
                     document.getElementById('search-results-modal').style.display = 'block';
                 })

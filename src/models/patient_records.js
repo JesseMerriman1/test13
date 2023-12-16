@@ -56,7 +56,7 @@ const PatientRecords = {
 
     async searchPatientRecords(searchTerm) {
         try {
-            const result = await pool.query("SELECT * FROM patient_records WHERE notes ILIKE $1 OR treatment_plan ILIKE $1", [`%${searchTerm}%`]);
+            const result = await pool.query("SELECT * FROM patient_records WHERE record_id = $1 OR notes ILIKE $2 OR treatment_plan ILIKE $2", [searchTerm, `%${searchTerm}%`]);
             return result.rows;
         } catch (err) {
             throw err;

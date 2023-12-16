@@ -40,6 +40,15 @@ document.addEventListener('DOMContentLoaded', function () {
     closeButtons.forEach(button => {
         button.addEventListener('click', closeModal);
     });
+
+    // Search records form event listener
+    const searchRecordsForm = document.getElementById('search-records-form');
+    if (searchRecordsForm) {
+        searchRecordsForm.addEventListener('submit', function (e) {
+            e.preventDefault();
+            searchRecords();
+        });
+    }
 });
 
 // Client management functions
@@ -131,7 +140,7 @@ function addRecord() {
 
 function searchRecords() {
     const query = document.getElementById('search-query').value;
-    fetch(`/api/patient-records/search?term=${encodeURIComponent(query)}`)
+    fetch(`/api/patient-records/${query}`)
         .then(handleResponse)
         .then(data => {
             const resultsContainer = document.getElementById('search-results');
