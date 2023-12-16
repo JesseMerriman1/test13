@@ -75,8 +75,12 @@ function searchClients() {
             resultsContainer.innerHTML = data.length === 0 ? '<p>No clients found.</p>' :
                 data.map(client => `
                     <div>
-                        ${client.name} - ${client.phoneNumber || 'N/A'}, ${client.address || 'N/A'}
-                        <button onclick="deleteClient('${client.phoneNumber}')">Delete</button>
+                        Client ID: ${client.client_id}, 
+                        Name: ${client.name}, 
+                        Phone Number: ${client.phoneNumber || 'N/A'}, 
+                        Address: ${client.address || 'N/A'}, 
+                        Pets Name: ${client.petsName || 'N/A'}
+                        <button onclick="deleteClient('${client.client_id}')">Delete</button>
                     </div>
                 `).join('');
             document.getElementById('search-results-modal').style.display = 'block';
@@ -84,15 +88,15 @@ function searchClients() {
         .catch(handleError);
 }
 
-function deleteClient(phoneNumber) {
-    console.log("Attempting to delete client with phone number:", phoneNumber);
-    if (!phoneNumber) {
-        console.error('Phone number is undefined');
-        alert('Error: Phone number is undefined. Cannot delete client.');
+function deleteClient(clientId) {
+    console.log("Attempting to delete client with ID:", clientId);
+    if (!clientId) {
+        console.error('Client ID is undefined');
+        alert('Error: Client ID is undefined. Cannot delete client.');
         return;
     }
 
-    fetch(`/api/clients/deleteByPhone/${phoneNumber}`, { method: 'DELETE' })
+    fetch(`/api/clients/${clientId}`, { method: 'DELETE' })
         .then(handleResponse)
         .then(() => {
             alert('Client deleted successfully!');

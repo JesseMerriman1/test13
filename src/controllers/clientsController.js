@@ -32,8 +32,8 @@ const clientsController = {
     // Create a new client
     createClient: async (req, res) => {
         try {
-            const { name, phone_number, address } = req.body;
-            const newClient = await Clients.createClient({ name, phone, address });
+            const { name, phoneNumber, address, petsName } = req.body;
+            const newClient = await Clients.createClient({ name, phoneNumber, address, petsName });
 
             res.status(201).json(newClient);
         } catch (err) {
@@ -46,9 +46,9 @@ const clientsController = {
     updateClient: async (req, res) => {
         try {
             const { id } = req.params;
-            const { name, phoneNumber, address } = req.body;
+            const { name, phoneNumber, address, petsName } = req.body;
 
-            const updatedClient = await Clients.updateClient(id, { name, phoneNumber, address });
+            const updatedClient = await Clients.updateClient(id, { name, phoneNumber, address, petsName });
 
             if (updatedClient) {
                 res.json(updatedClient);
@@ -61,11 +61,11 @@ const clientsController = {
         }
     },
 
-    // Delete a client by phone number
-    deleteClientByPhone: async (req, res) => {
+    // Delete a client by client ID
+    deleteClient: async (req, res) => {
         try {
-            const { phone_number } = req.params;
-            const deletedClient = await Clients.deleteClientByPhone(phone_number);
+            const { id } = req.params;
+            const deletedClient = await Clients.deleteClient(id);
 
             if (deletedClient) {
                 res.json({ message: "Client successfully deleted" });
