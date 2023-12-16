@@ -123,12 +123,11 @@ function addRecord() {
         treatment_plan: document.getElementById('treatment-plan').value
     };
 
-    fetch('/api/patient_records', {  // Use underscore instead of hyphen
+    fetch('/api/patient-records', {  // Use underscore instead of hyphen
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(recordData)
     })
-    
         .then(handleResponse)
         .then(data => {
             console.log('Record added:', data);
