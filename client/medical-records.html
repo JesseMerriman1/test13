@@ -56,7 +56,7 @@
 
         function searchRecords() {
             const query = document.getElementById('patient-search-query').value;
-            fetch(`/api/patient-records/search?term=${encodeURIComponent(query)}`)
+            fetch(`/api/patient_records/search?term=${encodeURIComponent(query)}`)
                 .then(handleResponse)
                 .then(data => {
                     const resultsContainer = document.getElementById('search-results');
@@ -75,7 +75,7 @@
                 treatment_plan: document.getElementById('treatment-plan').value
             };
 
-            fetch('/api/patient-records', {
+            fetch('/api/patient_records', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(recordData)

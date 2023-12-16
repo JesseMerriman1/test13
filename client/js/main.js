@@ -123,7 +123,7 @@ function addRecord() {
         treatment_plan: document.getElementById('treatment-plan').value
     };
 
-    fetch('/patient-records', {  // Use underscore instead of hyphen
+    fetch('/patient_records', {  // Use underscore instead of hyphen
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(recordData)
@@ -140,7 +140,7 @@ function addRecord() {
 
 function searchRecords() {
     const query = document.getElementById('search-query').value;
-    fetch(`/api/patient-records/search?term=${encodeURIComponent(query)}`)
+    fetch(`/api/patient_records/search?term=${encodeURIComponent(query)}`)
         .then(handleResponse)
         .then(data => {
             const resultsContainer = document.getElementById('search-results');
@@ -168,7 +168,7 @@ function deleteRecord(recordId) {
         return;
     }
 
-    fetch(`/api/patient-records/${recordId}`, { method: 'DELETE' })
+    fetch(`/api/patient_records/${recordId}`, { method: 'DELETE' })
         .then(handleResponse)
         .then(() => {
             alert('Record deleted successfully!');
