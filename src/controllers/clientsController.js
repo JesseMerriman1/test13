@@ -33,7 +33,8 @@ const clientsController = {
     createClient: async (req, res) => {
         try {
             const { name, phone_number, address } = req.body;
-            const newClient = await Clients.createClient({ name, phone, address });
+            // Fix typo: change 'phone' to 'phone_number'
+            const newClient = await Clients.createClient({ name, phone_number, address });
 
             res.status(201).json(newClient);
         } catch (err) {
@@ -47,8 +48,8 @@ const clientsController = {
         try {
             const { id } = req.params;
             const { name, phoneNumber, address } = req.body;
-
-            const updatedClient = await Clients.updateClient(id, { name, phoneNumber, address });
+            // Fix variable naming inconsistency: change 'phoneNumber' to 'phone_number'
+            const updatedClient = await Clients.updateClient(id, { name, phone_number, address });
 
             if (updatedClient) {
                 res.json(updatedClient);
@@ -65,7 +66,8 @@ const clientsController = {
     deleteClientByPhone: async (req, res) => {
         try {
             const { phone_number } = req.params;
-            const deletedClient = await Clients.deleteClientByPhone(phone_number);
+            // Fix method name: change 'deleteClientByPhone' to 'deleteClient'
+            const deletedClient = await Clients.deleteClient(phone_number);
 
             if (deletedClient) {
                 res.json({ message: "Client successfully deleted" });

@@ -17,7 +17,7 @@ router.post('/', clientsController.createClient);
 // Route for updating a client
 router.put('/:id', clientsController.updateClient);
 
-// Updated route for deleting a client by phone number
-router.delete('/deleteByPhone/:phone_number', clientsController.deleteClientByPhone);
+// Corrected route for deleting a client by phone number
+router.delete('/deleteByPhone/:phone_number', clientsController.deleteClient);
 
 module.exports = router;
