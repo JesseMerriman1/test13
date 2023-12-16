@@ -25,7 +25,7 @@ const usersRoutes = require('./src/routes/users');
 
 app.use('/api/appointments', appointmentsRoutes);
 app.use('/api/clients', clientsRoutes);
-app.use('/api/patientrecords', patientRecordsRoutes);
+app.use('/api/patient-records', patientRecordsRoutes);
 app.use('/api/patients', patientsRoutes);
 app.use('/api/auth', userAuthRoutes);
 app.use('/api/users', usersRoutes);
