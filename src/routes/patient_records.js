@@ -1,23 +1,23 @@
 const express = require('express');
 const router = express.Router();
-const PatientRecordsController = require('../controllers/PatientRecordsController');
+const patientsController = require('../controllers/PatientsRecordsController');
 
-// Route to search patient records
-router.get('/api/patient-records/search', PatientRecordsController.searchPatientRecords);
+// Route to get all patients
+router.get('/api/patients', patientsController.getAllPatients);
 
-// Route to get all patient records
-router.get('/api/patient-records', PatientRecordsController.getAllPatientRecords);
+// Route to get a specific patient by ID
+router.get('/api/patients/:id', patientsController.getPatientById);
 
-// Route to get a specific patient record by ID
-router.get('/api/patient-records/:id', PatientRecordsController.getPatientRecordById);
+// Route to create a new patient
+router.post('/api/patients', patientsController.createPatient);
 
-// Route to create a new patient record
-router.post('/api/patient-records', PatientRecordsController.createPatientRecord);
+// Route to update an existing patient
+router.put('/api/patients/:id', patientsController.updatePatient);
 
-// Route to update an existing patient record
-router.put('/api/patient-records/:id', PatientRecordsController.updatePatientRecord);
+// Route to delete a patient
+router.delete('/api/patients/:id', patientsController.deletePatient);
 
-// Route to delete a patient record
-router.delete('/api/patient-records/:id', PatientRecordsController.deletePatientRecord);
+// Route to search patients
+router.get('/api/patients/search', patientsController.searchPatients);
 
 module.exports = router;
