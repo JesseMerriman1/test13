@@ -34,7 +34,6 @@
                 <button type="submit">Submit</button>
             </form>
         </section>
-
         <div id="search-results-modal" class="modal">
             <div class="modal-content">
                 <span class="close-button" onclick="closeSearchModal()">&times;</span>
@@ -56,7 +55,7 @@
 
         function searchRecords() {
             const query = document.getElementById('patient-search-query').value;
-            fetch(`/api/patient-records/search?term=${encodeURIComponent(query)}`)
+            fetch(`/api/patientrecords/search?term=${encodeURIComponent(query)}`)
                 .then(handleResponse)
                 .then(data => {
                     const resultsContainer = document.getElementById('search-results');
@@ -75,7 +74,7 @@
                 treatment_plan: document.getElementById('treatment-plan').value
             };
 
-            fetch('/api/patient-records', {
+            fetch('/api/patientrecords', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(recordData)
@@ -92,7 +91,8 @@
             document.getElementById('search-results-modal').style.display = 'none';
         }
 
-        
+        // Add your other script functions as needed
     </script>
 </body>
 </html>
+
