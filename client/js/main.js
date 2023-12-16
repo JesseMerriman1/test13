@@ -138,7 +138,11 @@ function searchRecords() {
             resultsContainer.innerHTML = data.length === 0 ? '<p>No records found.</p>' :
                 data.map(record => `
                     <div>
-                        Patient ID: ${record.patient_id}, Date: ${record.date_of_visit}, Notes: ${record.notes || 'N/A'}, Treatment Plan: ${record.treatment_plan || 'N/A'}
+                        Record ID: ${record.record_id}, 
+                        Patient ID: ${record.patient_id}, 
+                        Date: ${record.date_of_visit}, 
+                        Notes: ${record.notes || 'N/A'}, 
+                        Treatment Plan: ${record.treatment_plan || 'N/A'}
                         <button onclick="deleteRecord(${record.record_id})">Delete</button>
                     </div>
                 `).join('');
