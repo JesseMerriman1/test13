@@ -28,8 +28,6 @@
         <section id="patient-medical-records">
             <h2>Add/Edit Medical Records</h2>
             <form id="medical-records-form">
-                <!-- Remove client_id input -->
-                <input type="number" id="patient-id" placeholder="Patient ID" required>
                 <input type="date" id="date-of-visit" required>
                 <textarea id="notes" placeholder="Notes"></textarea>
                 <textarea id="treatment-plan" placeholder="Treatment Plan"></textarea>
@@ -72,7 +70,6 @@
 
         function submitMedicalRecord() {
             const recordData = {
-                patient_id: document.getElementById('patient-id').value,
                 date_of_visit: document.getElementById('date-of-visit').value,
                 notes: document.getElementById('notes').value,
                 treatment_plan: document.getElementById('treatment-plan').value
@@ -95,7 +92,7 @@
             document.getElementById('search-results-modal').style.display = 'none';
         }
 
-        // Reuse existing functions from main.js for handleResponse, handleError, etc.
+        
     </script>
 </body>
 </html>
