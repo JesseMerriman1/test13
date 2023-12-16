@@ -1,7 +1,7 @@
 const PatientRecords = require('../models/patient_records');
 
 const PatientRecordsController = {
-    // pull all records
+    // Pull all records
     getAllPatientRecords: async (req, res) => {
         try {
             const allPatientRecords = await PatientRecords.getAllPatientRecords();
@@ -12,7 +12,7 @@ const PatientRecordsController = {
         }
     },
 
-    // pull one record by its ID
+    // Pull one record by its ID
     getPatientRecordById: async (req, res) => {
         try {
             const { id } = req.params;
@@ -44,7 +44,7 @@ const PatientRecordsController = {
         }
     },
 
-    // make changes to a patient record
+    // Make changes to a patient record
     updatePatientRecord: async (req, res) => {
         try {
             const { id } = req.params;
@@ -81,7 +81,7 @@ const PatientRecordsController = {
         }
     },
 
-    //Search for patient records 
+    // Search for patient records 
     searchPatientRecords: async (req, res) => {
         try {
             const searchTerm = req.query.term;
@@ -91,7 +91,6 @@ const PatientRecordsController = {
             res.status(500).send("Server error: " + err.message);
         }
     }
-
 };
 
 module.exports = PatientRecordsController;

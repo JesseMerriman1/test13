@@ -1,7 +1,6 @@
 const pool = require('../db');
 
 const PatientRecords = {
-    
     async getAllPatientRecords() {
         try {
             const allPatientRecords = await pool.query("SELECT * FROM patient_records");
@@ -11,7 +10,6 @@ const PatientRecords = {
         }
     },
 
-    
     async getPatientRecordById(id) {
         try {
             const patientRecord = await pool.query("SELECT * FROM patient_records WHERE record_id = $1", [id]);
@@ -21,7 +19,6 @@ const PatientRecords = {
         }
     },
 
-  
     async createPatientRecord(recordData) {
         try {
             const { patient_id, date_of_visit, notes, treatment_plan } = recordData;
@@ -35,7 +32,6 @@ const PatientRecords = {
         }
     },
 
-    
     async updatePatientRecord(id, recordData) {
         try {
             const { patient_id, date_of_visit, notes, treatment_plan } = recordData;
@@ -49,7 +45,6 @@ const PatientRecords = {
         }
     },
 
-    
     async deletePatientRecord(id) {
         try {
             const deletedPatientRecord = await pool.query("DELETE FROM patient_records WHERE record_id = $1 RETURNING *", [id]);
@@ -59,7 +54,6 @@ const PatientRecords = {
         }
     },
 
-   
     async searchPatientRecords(searchTerm) {
         try {
             const result = await pool.query("SELECT * FROM patient_records WHERE notes ILIKE $1 OR treatment_plan ILIKE $1", [`%${searchTerm}%`]);
@@ -68,7 +62,6 @@ const PatientRecords = {
             throw err;
         }
     }
-    
 };
 
 module.exports = PatientRecords;

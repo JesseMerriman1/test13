@@ -2,6 +2,9 @@ const express = require('express');
 const router = express.Router();
 const PatientRecordsController = require('../controllers/PatientRecordsController');
 
+// Route to search patient records
+router.get('/api/patient-records/search', PatientRecordsController.searchPatientRecords);
+
 // Route to get all patient records
 router.get('/api/patient-records', PatientRecordsController.getAllPatientRecords);
 
@@ -16,8 +19,5 @@ router.put('/api/patient-records/:id', PatientRecordsController.updatePatientRec
 
 // Route to delete a patient record
 router.delete('/api/patient-records/:id', PatientRecordsController.deletePatientRecord);
-
-// Route to search patient records
-router.get('/api/patient-records/search', PatientRecordsController.searchPatientRecords);
 
 module.exports = router;
